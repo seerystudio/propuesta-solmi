@@ -358,7 +358,108 @@ html.js .segs.visto tbody tr{opacity:1;transform:none}
   .segs td::before{content:attr(data-col);display:block;margin-bottom:3px;font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gris-2)}
 }
 
-/* ══════════ 07 · EL OBJETIVO ══════════ */
+/* ══════════ 07 · LO QUE MÁS BUSCA LA GENTE ══════════ */
+/* búsquedas, comparación, curva, tooltip y etiquetas de los videos */
+.bq-nota{margin:14px 0 0;font-size:13px;line-height:1.5;color:var(--gris-2)}
+
+/* una búsqueda, dibujada como la barra de Google */
+.q{display:flex;align-items:center;gap:12px;min-height:48px;padding:10px 18px;border:1px solid var(--linea-2);border-radius:24px;background:var(--negro-2);font-size:15.5px;letter-spacing:-.012em;line-height:1.3;color:var(--hueso)}
+.q svg{width:16px;height:16px;flex:none;fill:none;stroke:var(--gris);stroke-width:2;stroke-linecap:round}
+.q__alza{margin-left:auto;padding-left:8px;font-size:10px;font-weight:700;letter-spacing:.15em;color:var(--naranja);white-space:nowrap}
+.qs{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+
+/* la comparación: una barra por búsqueda, la del método en naranja */
+.rank{margin:0;padding:0;list-style:none;border-top:1px solid var(--linea-2)}
+.rank li{position:relative;display:grid;grid-template-columns:minmax(0,4fr) minmax(0,6fr) 128px;gap:6px 24px;align-items:center;padding:13px 0;border-bottom:1px solid var(--linea);cursor:default}
+.rank li:focus-visible{outline:2px solid var(--naranja);outline-offset:2px}
+.rank__t{font-size:15.5px;font-weight:600;letter-spacing:-.015em;line-height:1.3}
+.rank__pista{display:block;min-width:0}
+.rank__b{display:block;height:14px;width:var(--w);min-width:4px;border-radius:0 4px 4px 0;background:#6F6F6E;transform-origin:0 50%;transition:filter .2s ease}
+.rank .dest .rank__b{background:var(--naranja)}
+.rank__v{font-size:13.5px;line-height:1.3;color:var(--gris);text-align:right}
+.rank .dest .rank__v{color:var(--hueso);font-weight:600}
+@media(hover:hover) and (pointer:fine){.rank li:hover .rank__b{filter:brightness(1.3)}}
+.rank li:focus-visible .rank__b{filter:brightness(1.3)}
+
+/* la curva del año */
+.curva{position:relative}
+.curva svg{display:block;width:100%;height:auto;overflow:visible;touch-action:pan-y}
+.curva svg:focus-visible{outline:2px solid var(--naranja);outline-offset:6px}
+.c-base{stroke:rgba(255,255,255,.2);stroke-width:1}
+.c-area{fill:rgba(255,77,0,.1)}
+.c-linea{fill:none;stroke:var(--naranja);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.c-mes{fill:var(--gris-2);font-family:var(--sans);font-size:11.5px;font-weight:600;letter-spacing:.02em}
+.c-punto{fill:var(--naranja);stroke:var(--negro);stroke-width:2}
+.c-et{fill:var(--hueso);font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:-.01em}
+.c-et2{fill:var(--gris);font-family:var(--sans);font-size:12px}
+.c-guia{stroke:rgba(245,244,242,.4);stroke-width:1}
+.c-hover{fill:var(--hueso);stroke:var(--negro);stroke-width:2}
+
+/* el tooltip: un solo globo por gráfico; el valor manda, la etiqueta acompaña */
+.tip{position:absolute;z-index:5;left:0;top:0;min-width:150px;max-width:240px;padding:9px 12px;border:1px solid var(--linea-2);border-radius:9px;background:#1B1B1B;box-shadow:0 8px 24px rgba(0,0,0,.45);pointer-events:none;opacity:0;transition:opacity .12s ease}
+.tip.on{opacity:1}
+.tip b{display:block;font-size:14px;font-weight:600;letter-spacing:-.012em;color:var(--hueso)}
+.tip span{display:block;margin-top:2px;font-size:12.5px;line-height:1.4;color:var(--gris)}
+
+/* los videos: el tipo de mensaje de cada uno */
+.bq-tag{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gris-2)}
+.bq-tag::before{content:"";width:7px;height:7px;box-shadow:inset 0 0 0 1.5px var(--gris-2)}
+.bq-tag--nar{color:var(--naranja)}
+.bq-tag--nar::before{box-shadow:none;background:var(--naranja)}
+
+/* entrada */
+html.js [data-ver] .rank__b{transform:scaleX(0);transition:transform .8s var(--sal),filter .2s ease;transition-delay:calc(var(--q,0) * 90ms + .1s),0s}
+html.js [data-ver].visto .rank__b{transform:none}
+html.js [data-ver] .entra{opacity:0;transform:translateY(8px);transition:opacity .45s ease,transform .5s var(--sal);transition-delay:calc(var(--q,0) * 80ms + .1s)}
+html.js [data-ver].visto .entra{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){html.js [data-ver] .rank__b,html.js [data-ver] .entra{opacity:1;transform:none;transition:none}}
+@media print{html.js [data-ver] .rank__b,html.js [data-ver] .entra{opacity:1;transform:none}.tip{display:none}}
+@media(max-width:760px){.rank li{grid-template-columns:minmax(0,1fr) auto}.rank__pista{grid-column:1 / -1;grid-row:2}.rank__v{grid-row:1;grid-column:2}}
+/* 07 · la variante 1, «el buscador» (elegida el 2026-09-11) */
+/* la firma: el autocompletado de Google, en grande */
+.auto-par{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:28px 64px;margin:72px 0 0;padding-top:28px;border-top:1px solid var(--linea-2);align-items:start}
+.auto-par__lead{margin:14px 0 0;font-family:var(--tit);font-weight:600;letter-spacing:-.03em;font-size:clamp(20px,2.2vw,28px);line-height:1.2;max-width:20ch;text-wrap:balance}
+.auto{margin:0;border:1px solid var(--linea-2);border-radius:28px;background:var(--negro-2);overflow:hidden}
+.auto__campo{display:flex;align-items:center;gap:16px;padding:18px 24px;font-family:var(--tit);font-weight:600;letter-spacing:-.035em;font-size:clamp(22px,2.6vw,32px);line-height:1.1}
+.auto__campo svg{width:22px;height:22px;flex:none;fill:none;stroke:var(--gris);stroke-width:2;stroke-linecap:round}
+.auto__cursor{display:inline-block;width:2px;height:1.05em;margin-left:2px;background:var(--naranja);vertical-align:-.12em;animation:parpadeo 1.1s steps(1) infinite}
+@keyframes parpadeo{50%{opacity:0}}
+.auto__lista{margin:0;padding:6px 0 12px;list-style:none;border-top:1px solid var(--linea)}
+.auto__lista li{display:flex;align-items:center;gap:16px;padding:10px 24px;font-size:17px;letter-spacing:-.012em;color:var(--gris)}
+.auto__lista li svg{width:15px;height:15px;flex:none;fill:none;stroke:var(--gris-2);stroke-width:2;stroke-linecap:round}
+.auto__lista b{font-weight:600;color:var(--hueso)}
+
+/* los ejemplos: tres columnas de búsquedas */
+.qcols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 32px;margin:72px 0 0}
+.qcols h3{margin:0 0 6px;font-family:var(--tit);font-weight:600;letter-spacing:-.035em;font-size:clamp(22px,2.3vw,28px);line-height:1.1}
+.qcols .rot{display:block;margin:0 0 12px}
+.qcols p{margin:0 0 18px;font-size:14.5px;line-height:1.45;color:var(--gris)}
+
+/* comparación y curva, lado a lado */
+.v1-datos{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:48px 56px;margin:88px 0 0;align-items:start}
+.v1-datos figure{margin:0;position:relative}
+.v1-datos .rank li{grid-template-columns:minmax(0,1fr) auto}
+.v1-datos .rank__pista{grid-column:1 / -1;grid-row:2}
+.v1-datos .rank__v{grid-row:1;grid-column:2}
+
+/* los videos, en lista */
+.vids{margin:0;padding:0;list-style:none;border-top:1px solid var(--linea-2)}
+.vids li{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:4px 22px;align-items:center;padding:18px 0;border-bottom:1px solid var(--linea)}
+.vids__play{width:52px;height:36px;border-radius:10px;border:1px solid var(--linea-2);display:grid;place-items:center}
+.vids__play::after{content:"";border-left:10px solid var(--hueso);border-top:6px solid transparent;border-bottom:6px solid transparent;margin-left:3px}
+.vids a{text-decoration:none}
+.vids h4{margin:0;font-family:var(--tit);font-weight:600;letter-spacing:-.025em;font-size:clamp(18px,1.8vw,22px);line-height:1.2;text-wrap:balance}
+@media(hover:hover) and (pointer:fine){.vids a:hover h4{color:var(--naranja)}}
+.vids__meta{display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:6px;font-size:13.5px;color:var(--gris)}
+.vids__n{text-align:right;font-family:var(--tit);font-weight:600;letter-spacing:-.045em;font-size:clamp(28px,3vw,40px);line-height:.9;white-space:nowrap}
+.vids__n span{display:block;margin-top:6px;font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:0;color:var(--gris)}
+.v1-remate{margin-top:88px!important}
+
+@media(max-width:1000px){.auto-par,.v1-datos{grid-template-columns:minmax(0,1fr)}.qcols{grid-template-columns:minmax(0,1fr);gap:36px 0}}
+@media(max-width:640px){.vids li{grid-template-columns:minmax(0,1fr)}.vids__play{display:none}.vids__n{text-align:left}}
+@media(prefers-reduced-motion:reduce){.auto__cursor{animation:none}}
+
+/* ══════════ 08 · EL OBJETIVO ══════════ */
 .s07-intro{padding:40px 0 0}
 .s07-intro__lead{margin:0;font-family:var(--tit);font-weight:600;letter-spacing:-.035em;font-size:clamp(24px,2.8vw,36px);line-height:1.12;max-width:30ch;text-wrap:balance}
 .s07-intro__lead em{font-style:normal;color:var(--naranja)}
@@ -392,7 +493,7 @@ html.js .giro.visto > *{opacity:1;transform:none}
 }
 @media(max-width:760px){.versus .c-nue::before{color:var(--naranja)}}
 
-/* ══════════ 08 · POSICIONAMIENTO (pantalla sola) ══════════ */
+/* ══════════ 09 · POSICIONAMIENTO (pantalla sola) ══════════ */
 .tapa--sola{min-height:calc(100svh - 56px);justify-content:center;padding:96px 0 64px}
 .tapa .frase{margin:30px 0 0;font-weight:800;letter-spacing:-.055em;font-size:clamp(56px,11vw,160px);line-height:.88}
 .frase em{display:block;font-style:normal;color:var(--naranja)}
@@ -413,7 +514,7 @@ html.js .s08-tres.visto .bloque{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){html.js .giro > *,html.js .s08-tres .bloque{opacity:1;transform:none;transition:none}}
 @media print{html.js .giro > *,html.js .s08-tres .bloque{opacity:1;transform:none}.giro__lado p,.s08-tres .bloque p{color:#111}.tapa--sola{min-height:0}}
 
-/* ══════════ 09 a 19 · piezas compartidas ══════════ */
+/* ══════════ 10 a 20 · piezas compartidas ══════════ */
 /* cada sección cierra con el mismo aire que las de arriba */
 main > section[id] > .env > :last-child{padding-bottom:110px}
 .tapa h2.largo{max-width:13ch;text-wrap:balance}
@@ -471,7 +572,7 @@ html.js .tabla.visto tbody tr{opacity:1;transform:none}
   .par2{grid-template-columns:minmax(0,1fr)}
 }
 
-/* ══════════ 09 · CONTENIDO ══════════ */
+/* ══════════ 10 · CONTENIDO ══════════ */
 .barra100{display:flex;gap:3px;height:16px}
 .barra100 i{display:block;background:var(--c);transform-origin:0 50%}
 .temas__lista{margin:20px 0 0;padding:0;list-style:none;border-top:1px solid var(--linea-2)}
@@ -493,7 +594,7 @@ html.js .temas.visto .barra100 i{transform:none}
 @media(max-width:760px){.tema{grid-template-columns:72px minmax(0,1fr)}.tema p{grid-column:2}}
 @media(max-width:700px){.cifra{grid-template-columns:minmax(0,1fr)}}
 
-/* ══════════ 10 · EL EMBUDO ══════════ */
+/* ══════════ 11 · EL EMBUDO ══════════ */
 .embudo__cab,.esc{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr) minmax(0,3fr);gap:0 32px;align-items:center}
 .embudo__cab{padding:0 0 12px;border-bottom:1px solid var(--linea-2)}
 .embudo{margin:0;padding:0;list-style:none}
@@ -537,7 +638,7 @@ html.js .embudo.visto .esc__barra{opacity:1;transform:none}
   .esc__forma{justify-content:flex-start}
 }
 
-/* ══════════ 11 · CANALES, MARCA Y SITIO WEB ══════════ */
+/* ══════════ 12 · CANALES, MARCA Y SITIO WEB ══════════ */
 .orden{margin:0;padding:0;list-style:none;border-top:1px solid var(--linea-2)}
 .canal{display:grid;grid-template-columns:64px minmax(0,4fr) minmax(0,6fr) 110px;gap:4px 28px;align-items:baseline;padding:18px 0;border-bottom:1px solid var(--linea)}
 .canal__n{font-family:var(--tit);font-weight:600;letter-spacing:-.05em;font-size:clamp(34px,3.6vw,48px);line-height:.9;color:var(--gris-2)}
@@ -567,7 +668,7 @@ html.js .embudo.visto .esc__barra{opacity:1;transform:none}
 @media(max-width:800px){.canal{grid-template-columns:48px minmax(0,1fr)}.canal p,.canal__costo{grid-column:2;justify-self:start}}
 @media(max-width:560px){.sitio{grid-template-columns:minmax(0,1fr)}.movil{max-width:300px}}
 
-/* ══════════ 12 · INVERSIÓN PUBLICITARIA ══════════ */
+/* ══════════ 13 · INVERSIÓN PUBLICITARIA ══════════ */
 .escen{margin:0;padding:0;list-style:none;border-top:1px solid var(--linea-2)}
 .escen li{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,7fr) minmax(0,2fr);gap:12px 28px;align-items:center;padding:20px 0;border-bottom:1px solid var(--linea)}
 .escen__nom b{display:block;font-family:var(--tit);font-weight:600;letter-spacing:-.03em;font-size:clamp(19px,1.9vw,24px);line-height:1.1}
@@ -589,7 +690,7 @@ html.js .pila i{transform:scaleX(0);transition:transform .7s var(--sal);transiti
 html.js .reparto.visto .pila i{transform:none}
 @media(max-width:760px){.escen li{grid-template-columns:minmax(0,1fr) auto}.escen__tot{grid-column:2;grid-row:1}.pila{grid-column:1 / -1}}
 
-/* ══════════ 13 · PRODUCCIÓN ══════════ */
+/* ══════════ 14 · PRODUCCIÓN ══════════ */
 .pasos{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));position:relative}
 .pasos::before{content:"";position:absolute;top:5px;left:6px;width:75%;height:2px;background:var(--naranja);transform-origin:0 50%}
 .pasos li{position:relative;padding:34px 22px 0 0}
@@ -618,7 +719,7 @@ html.js .captura.visto .pasos::before,html.js .captura.visto .pasos li::before{o
 }
 @media(max-width:700px){.cifras{grid-template-columns:minmax(0,1fr)}.cifras > div,.cifras > div + div{padding:18px 0;border-right:0;border-bottom:1px solid var(--linea)}}
 
-/* ══════════ 14 · MEDICIÓN ══════════ */
+/* ══════════ 15 · MEDICIÓN ══════════ */
 .kpis__cab,.kpi{display:grid;grid-template-columns:40px minmax(0,1fr) 220px;gap:4px 28px;align-items:center}
 .kpis__cab{padding:0 0 12px;border-bottom:1px solid var(--linea-2)}
 .kpis__cab .rot:last-child{text-align:right}
@@ -639,7 +740,7 @@ html.js .captura.visto .pasos::before,html.js .captura.visto .pasos li::before{o
   .kpi__hoy span{margin:0}
 }
 
-/* ══════════ 15 · HOJA DE RUTA ══════════ */
+/* ══════════ 16 · HOJA DE RUTA ══════════ */
 .ruta__hint{display:none;margin:0 0 10px;font-size:13px;color:var(--gris)}
 .ruta__scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-top:1px solid var(--linea-2)}
 .ruta__scroll:focus-visible{outline-offset:-2px}
@@ -670,7 +771,7 @@ html.js .gantt.visto .g-b{transform:none}
 html.js .gantt.visto .g-m{opacity:1}
 @media(max-width:860px){.ruta__hint{display:block}}
 
-/* ══════════ 16 · LO QUE SE NECESITA DE LA EMPRESA ══════════ */
+/* ══════════ 17 · LO QUE SE NECESITA DE LA EMPRESA ══════════ */
 .preguntas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:64px 0 0;border-top:1px solid var(--linea-2)}
 .preg{padding:24px 28px 30px 0;border-right:1px solid var(--linea);min-width:0}
 .preg + .preg{padding-left:28px}
@@ -691,7 +792,7 @@ html.js .gantt.visto .g-m{opacity:1}
 @media(max-width:900px){.preguntas{grid-template-columns:minmax(0,1fr)}.preg,.preg + .preg{padding:22px 0 26px;border-right:0;border-bottom:1px solid var(--linea)}.preg:last-child{border-bottom:0}}
 @media(max-width:760px){.plegado ol{columns:1}}
 
-/* ══════════ 17 · ALCANCE E INVERSIÓN ══════════ */
+/* ══════════ 18 · ALCANCE E INVERSIÓN ══════════ */
 .planes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px 48px;margin:64px 0 0}
 .plan{padding:24px 0 0;border-top:1px solid var(--linea-2);min-width:0}
 .plan--mes{border-top:2px solid var(--naranja)}
@@ -710,7 +811,7 @@ html.js .gantt.visto .g-m{opacity:1}
 .aparte em{grid-column:2;grid-row:1 / 3;font-style:normal;font-family:var(--tit);font-weight:600;letter-spacing:-.03em;font-size:20px;white-space:nowrap}
 @media(max-width:900px){.planes{grid-template-columns:minmax(0,1fr)}}
 
-/* ══════════ 18 · LO QUE EL PLAN NO RESUELVE ══════════ */
+/* ══════════ 19 · LO QUE EL PLAN NO RESUELVE ══════════ */
 .limites{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 48px;margin:56px 0 0;padding:0;list-style:none;counter-reset:l}
 .limite{padding:24px 0 36px;border-top:1px solid var(--linea-2);counter-increment:l;min-width:0}
 .limite::before{content:counter(l,decimal-leading-zero);display:block;margin:0 0 18px;font-size:10px;font-weight:700;letter-spacing:.15em;color:var(--naranja)}
@@ -719,7 +820,7 @@ html.js .gantt.visto .g-m{opacity:1}
 @media(max-width:1000px){.limites{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){.limites{grid-template-columns:minmax(0,1fr)}}
 
-/* ══════════ 19 · SIGUIENTE PASO Y PIE ══════════ */
+/* ══════════ 20 · SIGUIENTE PASO Y PIE ══════════ */
 .tapa .frase.frase--fin{font-size:clamp(52px,9vw,136px)}
 .acciones{display:flex;flex-wrap:wrap;gap:12px;margin:40px 0 0}
 .cta{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:13px 22px;border-radius:100px;background:var(--naranja);color:#fff;text-decoration:none;font-size:15px;font-weight:600;letter-spacing:-.012em;transition:transform .16s var(--sal),background .2s ease}
@@ -734,7 +835,7 @@ html.js .gantt.visto .g-m{opacity:1}
 @media(hover:hover) and (pointer:fine){.pie__links a:hover{color:var(--naranja)}}
 @media(max-width:700px){.pie__links{margin-left:0}}
 
-/* 09 a 19: sin movimiento y en papel, todo quieto y legible */
+/* 10 a 20: sin movimiento y en papel, todo quieto y legible */
 @media(prefers-reduced-motion:reduce){
   html.js .aparece > *,html.js .tabla tbody tr,html.js .barra100 i,html.js .esc__barra,html.js .pila i,html.js .pasos::before,html.js .pasos li::before,html.js .g-b{opacity:1;transform:none;transition:none}
   html.js .g-m{opacity:1;transition:none}
@@ -767,7 +868,7 @@ html.js .gantt.visto .g-m{opacity:1}
     <a class="marca" href="#"><i></i>Emanuel Seery</a>
     <span class="barra__doc">Auditoría y propuesta<span class="ancho"> · Impermeabilización Elástica Solmi</span></span>
     <nav class="avance" id="avance" aria-label="Avance de lectura">
-      <span class="grupo" data-rot="Diagnóstico"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="grupo" data-rot="Diagnóstico"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
       <span class="grupo" data-rot="El plan"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
       <span class="grupo" data-rot="El acuerdo"><i></i><i></i><i></i><i></i></span>
     </nav>
@@ -794,22 +895,22 @@ html.js .gantt.visto .g-m{opacity:1}
   <div class="env">
     <nav class="mapa" aria-label="Contenido del documento">
       <div class="acto acto--1">
-        <p class="acto__num">Parte 1 · secciones <b>01 &rarr; 06</b></p>
-        <div class="tics" aria-hidden="true"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i></div>
+        <p class="acto__num">Parte 1 · secciones <b>01 &rarr; 07</b></p>
+        <div class="tics" aria-hidden="true"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i><i style="--i:6"></i></div>
         <h2>Diagnóstico</h2>
         <p class="acto__q">Dónde está hoy la empresa</p>
-        <p class="acto__hay">Situación actual · activos · competencia · análisis FODA · público objetivo.</p>
+        <p class="acto__hay">Situación actual · activos · competencia · análisis FODA · público objetivo · lo que más busca la gente.</p>
       </div>
       <div class="acto acto--2">
-        <p class="acto__num">Parte 2 · secciones <b>07 &rarr; 15</b></p>
-        <div class="tics" aria-hidden="true"><i style="--i:6"></i><i style="--i:7"></i><i style="--i:8"></i><i style="--i:9"></i><i style="--i:10"></i><i style="--i:11"></i><i style="--i:12"></i><i style="--i:13"></i><i style="--i:14"></i></div>
+        <p class="acto__num">Parte 2 · secciones <b>08 &rarr; 16</b></p>
+        <div class="tics" aria-hidden="true"><i style="--i:7"></i><i style="--i:8"></i><i style="--i:9"></i><i style="--i:10"></i><i style="--i:11"></i><i style="--i:12"></i><i style="--i:13"></i><i style="--i:14"></i><i style="--i:15"></i></div>
         <h2>El plan</h2>
         <p class="acto__q">Qué se propone hacer</p>
         <p class="acto__hay">Objetivo · posicionamiento · contenido · embudo · canales, marca y sitio web · inversión publicitaria · producción · medición · hoja de ruta.</p>
       </div>
       <div class="acto acto--3">
-        <p class="acto__num">Parte 3 · secciones <b>16 &rarr; 19</b></p>
-        <div class="tics" aria-hidden="true"><i style="--i:15"></i><i style="--i:16"></i><i style="--i:17"></i><i style="--i:18"></i></div>
+        <p class="acto__num">Parte 3 · secciones <b>17 &rarr; 20</b></p>
+        <div class="tics" aria-hidden="true"><i style="--i:16"></i><i style="--i:17"></i><i style="--i:18"></i><i style="--i:19"></i></div>
         <h2>El acuerdo</h2>
         <p class="acto__q">Cómo se trabaja</p>
         <p class="acto__hay">Lo que se necesita de la empresa · alcance e inversión · lo que el plan no resuelve · siguiente paso.</p>
@@ -1231,11 +1332,134 @@ html.js .gantt.visto .g-m{opacity:1}
   </div>
 </section>
 
-<!-- ══════════ 07 · EL OBJETIVO ══════════ -->
+<!-- ══════════ 07 · LO QUE MÁS BUSCA LA GENTE ══════════ -->
 <section id="s07">
   <div class="env">
     <div class="tapa">
-      <span class="rot rot--nar">Parte 2 · 07</span>
+      <span class="rot rot--nar">Parte 1 · 07</span>
+      <h2 class="largo">Lo que más busca la gente</h2>
+    </div>
+
+    <div class="intro">
+      <p class="intro__lead">La gente busca el arreglo, <em>no el problema.</em></p>
+      <p class="intro__txt">En Google se escribe mucho más el nombre del producto que se quiere comprar que la
+      descripción de lo que está pasando en el techo. Estas son búsquedas reales, hechas en Argentina.</p>
+    </div>
+
+    <div class="auto-par" data-ver>
+      <div>
+        <span class="rot rot--nar">Lo que completa Google</span>
+        <p class="auto-par__lead">Alguien empieza a escribir «membrana líquida». Esto es lo que le sugiere el buscador.</p>
+      </div>
+      <figure class="auto" aria-label="Sugerencias de Google para «membrana líquida»">
+        <div class="auto__campo"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span>membrana líquida<i class="auto__cursor" aria-hidden="true"></i></span></div>
+        <ul class="auto__lista">
+          <li class="entra"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span>membrana líquida <b>para techos</b></span></li>
+          <li class="entra"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span>membrana líquida <b>con caucho</b></span></li>
+          <li class="entra"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span>membrana líquida <b>para techos de chapa</b></span></li>
+          <li class="entra"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span>membrana líquida <b>transparente</b></span></li>
+          <li class="entra"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span>membrana líquida <b>sobre membrana de aluminio</b></span></li>
+        </ul>
+      </figure>
+    </div>
+
+    <div class="qcols aparece">
+      <div>
+        <span class="rot">Busca el problema</span>
+        <h3>Lo que ve</h3>
+        <p>Describe lo que aparece en la pared o en el techo.</p>
+        <ul class="qs">
+          <li class="q"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>manchas de humedad en la pared</li>
+          <li class="q"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>humedad en el techo del baño</li>
+          <li class="q"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>gotera en el techo, qué hacer</li>
+        </ul>
+      </div>
+      <div>
+        <span class="rot rot--nar">Busca el arreglo</span>
+        <h3>Lo que cree que necesita</h3>
+        <p>Ya eligió el método, y casi siempre es una membrana.</p>
+        <ul class="qs">
+          <li class="q"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>membrana líquida para techos</li>
+          <li class="q"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>membrana sobre membrana vieja</li>
+          <li class="q"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>impermeabilizante transparente</li>
+        </ul>
+      </div>
+      <div>
+        <span class="rot">Busca su techo</span>
+        <h3>Dónde le pasa</h3>
+        <p>Nombra la superficie que tiene que resolver.</p>
+        <ul class="qs">
+          <li class="q"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>cómo impermeabilizar un techo de losa<span class="q__alza">+1.600&nbsp;%</span></li>
+          <li class="q"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>filtraciones en techo de chapa</li>
+          <li class="q"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>impermeabilizar tanque de agua potable</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="v1-datos">
+      <figure aria-labelledby="v1-rk" data-ver>
+        <div class="tablero__cab">
+          <h3 id="v1-rk">Cuánto se busca cada cosa</h3>
+          <span>Comparado con «humedad en la pared».</span>
+        </div>
+        <ol class="rank">
+          <li class="dest" style="--w:100%" data-fuerte="6 veces más" data-suave="que «humedad en la pared», en promedio en el último año"><span class="rank__t">membrana líquida</span><span class="rank__pista"><i class="rank__b"></i></span><span class="rank__v">6 veces más</span></li>
+          <li style="--w:86%" data-fuerte="5 veces más" data-suave="que «humedad en la pared», en promedio en el último año"><span class="rank__t">impermeabilizante</span><span class="rank__pista"><i class="rank__b"></i></span><span class="rank__v">5 veces más</span></li>
+          <li style="--w:22%" data-fuerte="Un tercio más" data-suave="que «humedad en la pared», en promedio en el último año"><span class="rank__t">membrana asfáltica</span><span class="rank__pista"><i class="rank__b"></i></span><span class="rank__v">un tercio más</span></li>
+          <li style="--w:16%" data-fuerte="Punto de comparación" data-suave="Las otras búsquedas se miden contra esta"><span class="rank__t">humedad en la pared</span><span class="rank__pista"><i class="rank__b"></i></span><span class="rank__v">referencia</span></li>
+          <li style="--w:5.5%" data-fuerte="Un tercio" data-suave="de lo que se busca «humedad en la pared»"><span class="rank__t">humedad de cimientos</span><span class="rank__pista"><i class="rank__b"></i></span><span class="rank__v">un tercio</span></li>
+        </ol>
+        <p class="bq-nota">Promedio de septiembre de 2025 a septiembre de 2026, en Argentina. Fuente: Google Trends.</p>
+      </figure>
+
+      <figure aria-labelledby="v1-cv" data-ver>
+        <div class="tablero__cab">
+          <h3 id="v1-cv">La temporada empieza ahora</h3>
+          <span>«Membrana líquida», semana por semana.</span>
+        </div>
+        <div class="curva" data-alto="300" data-marcas='[{"i":42,"t":"Junio","s":"lo más bajo del año","pos":"abajo"},{"i":51,"t":"Fines de agosto","s":"lo más alto del año"}]'>
+          <svg tabindex="0" role="img" aria-label="Interés semanal en Google por «membrana líquida». Baja a su punto más bajo a fines de junio y sube a su punto más alto a fines de agosto de 2026. Con las flechas se recorre semana por semana."></svg>
+        </div>
+        <p class="bq-nota">Sube dos veces por año: antes del otoño y antes de la primavera. Fuente: Google Trends.</p>
+      </figure>
+    </div>
+
+    <figure class="fig" aria-labelledby="v1-vd" data-ver>
+      <div class="tablero__cab">
+        <h3 id="v1-vd">Lo que miran en YouTube</h3>
+        <span>Los más vistos del tema explican el error o prometen que no vuelve.</span>
+      </div>
+      <ol class="vids">
+        <li class="entra"><span class="vids__play" aria-hidden="true"></span><a href="https://www.youtube.com/watch?v=xdcCr1HZRag" target="_blank" rel="noopener"><h4>6 errores al aplicar membrana líquida que arruinan tu techo</h4><span class="vids__meta"><span>Arquitecto Marcelo Seia</span><span class="bq-tag bq-tag--nar">Explica el error</span></span></a><p class="vids__n">287 mil<span>vistas en cinco días</span></p></li>
+        <li class="entra"><span class="vids__play" aria-hidden="true"></span><a href="https://www.youtube.com/watch?v=3kWuyfMaN_4" target="_blank" rel="noopener"><h4>No impermeabilices tu techo sin ver esto: ¿membrana líquida o asfáltica?</h4><span class="vids__meta"><span>Arquitecto Marcelo Seia</span><span class="bq-tag bq-tag--nar">Explica el error</span></span></a><p class="vids__n">1,6 M<span>vistas</span></p></li>
+        <li class="entra"><span class="vids__play" aria-hidden="true"></span><a href="https://www.youtube.com/watch?v=8cAf_uTtvdA" target="_blank" rel="noopener"><h4>Cómo tapar grietas para siempre</h4><span class="vids__meta"><span>Monchis15</span><span class="bq-tag">Promete</span></span></a><p class="vids__n">11,6 M<span>vistas</span></p></li>
+      </ol>
+    </figure>
+
+    <figure class="fig tabla v1-remate" aria-labelledby="v1-rm">
+      <div class="tablero__cab">
+        <h3 id="v1-rm">Cómo entra Solmi en esas búsquedas</h3>
+      </div>
+      <table>
+        <colgroup><col style="width:34%"><col></colgroup>
+        <thead><tr><th scope="col">Lo que busca la gente</th><th scope="col">Cómo aparece Solmi</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">El arreglo</th><td data-col="Cómo aparece Solmi">Como la alternativa. El contenido explica por qué la membrana vuelve a filtrar, y muestra un producto que no es membrana.</td></tr>
+          <tr><th scope="row">El problema</th><td data-col="Cómo aparece Solmi">Con la respuesta a esa misma pregunta: en la web, en los videos y en la ficha de Google.</td></tr>
+          <tr><th scope="row">Su techo</th><td data-col="Cómo aparece Solmi">Con una obra igual a la suya, terminada.</td></tr>
+        </tbody>
+      </table>
+    </figure>
+
+    <p class="remate">La gente ya está buscando la solución. <em>El plan es que, cuando la busque, encuentre a Solmi.</em></p>
+  </div>
+</section>
+
+<!-- ══════════ 08 · EL OBJETIVO ══════════ -->
+<section id="s08">
+  <div class="env">
+    <div class="tapa">
+      <span class="rot rot--nar">Parte 2 · 08</span>
       <h2>El objetivo</h2>
     </div>
 
@@ -1283,11 +1507,11 @@ html.js .gantt.visto .g-m{opacity:1}
   </div>
 </section>
 
-<!-- ══════════ 08 · POSICIONAMIENTO ══════════ -->
-<section id="s08">
+<!-- ══════════ 09 · POSICIONAMIENTO ══════════ -->
+<section id="s09">
   <div class="env">
     <div class="tapa tapa--sola">
-      <span class="rot rot--nar">Parte 2 · 08 · Posicionamiento</span>
+      <span class="rot rot--nar">Parte 2 · 09 · Posicionamiento</span>
       <h2 class="frase">Prometer, <em>y estar para cumplirlo.</em></h2>
       <p class="frase__baj">En un rubro donde todos prometen una garantía, <b>Solmi puede demostrar que va a estar para cumplirla.</b></p>
     </div>
@@ -1317,11 +1541,11 @@ html.js .gantt.visto .g-m{opacity:1}
   </div>
 </section>
 
-<!-- ══════════ 09 · CONTENIDO ══════════ -->
-<section id="s09">
+<!-- ══════════ 10 · CONTENIDO ══════════ -->
+<section id="s10">
   <div class="env">
     <div class="tapa">
-      <span class="rot rot--nar">Parte 2 · 09</span>
+      <span class="rot rot--nar">Parte 2 · 10</span>
       <h2>Contenido</h2>
     </div>
 
@@ -1378,7 +1602,7 @@ html.js .gantt.visto .g-m{opacity:1}
     <div class="par2 par2--nar">
       <div>
         <span class="rot rot--nar">Lo que no se va a hacer</span>
-        <p class="par2__lead">Lo que repite el rubro, y la regla de la 08.</p>
+        <p class="par2__lead">Lo que repite el rubro, y la regla de la 09.</p>
       </div>
       <ul class="x-lista">
         <li>La placa de «servicios» con el logo y el teléfono.</li>
@@ -1391,11 +1615,11 @@ html.js .gantt.visto .g-m{opacity:1}
   </div>
 </section>
 
-<!-- ══════════ 10 · EL EMBUDO ══════════ -->
-<section id="s10">
+<!-- ══════════ 11 · EL EMBUDO ══════════ -->
+<section id="s11">
   <div class="env">
     <div class="tapa">
-      <span class="rot rot--nar">Parte 2 · 10</span>
+      <span class="rot rot--nar">Parte 2 · 11</span>
       <h2>El embudo</h2>
     </div>
 
@@ -1467,11 +1691,11 @@ html.js .gantt.visto .g-m{opacity:1}
   </div>
 </section>
 
-<!-- ══════════ 11 · CANALES, MARCA Y SITIO WEB ══════════ -->
-<section id="s11">
+<!-- ══════════ 12 · CANALES, MARCA Y SITIO WEB ══════════ -->
+<section id="s12">
   <div class="env">
     <div class="tapa">
-      <span class="rot rot--nar">Parte 2 · 11</span>
+      <span class="rot rot--nar">Parte 2 · 12</span>
       <h2 class="largo">Canales, marca y sitio web</h2>
     </div>
 
@@ -1560,11 +1784,11 @@ html.js .gantt.visto .g-m{opacity:1}
   </div>
 </section>
 
-<!-- ══════════ 12 · INVERSIÓN PUBLICITARIA ══════════ -->
-<section id="s12">
+<!-- ══════════ 13 · INVERSIÓN PUBLICITARIA ══════════ -->
+<section id="s13">
   <div class="env">
     <div class="tapa">
-      <span class="rot rot--nar">Parte 2 · 12</span>
+      <span class="rot rot--nar">Parte 2 · 13</span>
       <h2 class="largo">Inversión publicitaria</h2>
     </div>
 
@@ -1632,11 +1856,11 @@ html.js .gantt.visto .g-m{opacity:1}
   </div>
 </section>
 
-<!-- ══════════ 13 · PRODUCCIÓN ══════════ -->
-<section id="s13">
+<!-- ══════════ 14 · PRODUCCIÓN ══════════ -->
+<section id="s14">
   <div class="env">
     <div class="tapa">
-      <span class="rot rot--nar">Parte 2 · 13</span>
+      <span class="rot rot--nar">Parte 2 · 14</span>
       <h2>Producción</h2>
     </div>
 
@@ -1685,11 +1909,11 @@ html.js .gantt.visto .g-m{opacity:1}
   </div>
 </section>
 
-<!-- ══════════ 14 · MEDICIÓN ══════════ -->
-<section id="s14">
+<!-- ══════════ 15 · MEDICIÓN ══════════ -->
+<section id="s15">
   <div class="env">
     <div class="tapa">
-      <span class="rot rot--nar">Parte 2 · 14</span>
+      <span class="rot rot--nar">Parte 2 · 15</span>
       <h2>Medición</h2>
     </div>
 
@@ -1724,18 +1948,18 @@ html.js .gantt.visto .g-m{opacity:1}
       <div class="bloque bloque--regla">
         <span class="rot rot--nar">Ningún resultado prometido</span>
         <h3>No se promete lo que no se puede firmar</h3>
-        <p>Esta propuesta no promete un número de consultas ni de ventas. Es la misma regla de la 08,
+        <p>Esta propuesta no promete un número de consultas ni de ventas. Es la misma regla de la 09,
         aplicada al plan.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════ 15 · HOJA DE RUTA ══════════ -->
-<section id="s15">
+<!-- ══════════ 16 · HOJA DE RUTA ══════════ -->
+<section id="s16">
   <div class="env">
     <div class="tapa">
-      <span class="rot rot--nar">Parte 2 · 15</span>
+      <span class="rot rot--nar">Parte 2 · 16</span>
       <h2>Hoja de ruta</h2>
     </div>
 
@@ -1821,11 +2045,11 @@ html.js .gantt.visto .g-m{opacity:1}
   </div>
 </section>
 
-<!-- ══════════ 16 · LO QUE SE NECESITA DE LA EMPRESA ══════════ -->
-<section id="s16">
+<!-- ══════════ 17 · LO QUE SE NECESITA DE LA EMPRESA ══════════ -->
+<section id="s17">
   <div class="env">
     <div class="tapa">
-      <span class="rot rot--nar">Parte 3 · 16</span>
+      <span class="rot rot--nar">Parte 3 · 17</span>
       <h2 class="largo">Lo que se necesita de la empresa</h2>
     </div>
 
@@ -1874,11 +2098,11 @@ html.js .gantt.visto .g-m{opacity:1}
   </div>
 </section>
 
-<!-- ══════════ 17 · ALCANCE E INVERSIÓN ══════════ -->
-<section id="s17">
+<!-- ══════════ 18 · ALCANCE E INVERSIÓN ══════════ -->
+<section id="s18">
   <div class="env">
     <div class="tapa">
-      <span class="rot rot--nar">Parte 3 · 17</span>
+      <span class="rot rot--nar">Parte 3 · 18</span>
       <h2 class="largo">Alcance e inversión</h2>
     </div>
 
@@ -1942,11 +2166,11 @@ html.js .gantt.visto .g-m{opacity:1}
   </div>
 </section>
 
-<!-- ══════════ 18 · LO QUE EL PLAN NO RESUELVE ══════════ -->
-<section id="s18">
+<!-- ══════════ 19 · LO QUE EL PLAN NO RESUELVE ══════════ -->
+<section id="s19">
   <div class="env">
     <div class="tapa">
-      <span class="rot rot--nar">Parte 3 · 18</span>
+      <span class="rot rot--nar">Parte 3 · 19</span>
       <h2 class="largo">Lo que el plan no resuelve</h2>
     </div>
 
@@ -1965,11 +2189,11 @@ html.js .gantt.visto .g-m{opacity:1}
   </div>
 </section>
 
-<!-- ══════════ 19 · SIGUIENTE PASO ══════════ -->
-<section id="s19">
+<!-- ══════════ 20 · SIGUIENTE PASO ══════════ -->
+<section id="s20">
   <div class="env">
     <div class="tapa tapa--sola">
-      <span class="rot rot--nar">Parte 3 · 19 · Siguiente paso</span>
+      <span class="rot rot--nar">Parte 3 · 20 · Siguiente paso</span>
       <h2 class="frase frase--fin">Tres respuestas, <em>y el plan arranca.</em></h2>
       <p class="frase__baj">El siguiente paso es uno solo: <b>responder las tres preguntas de la sección 16.</b>
       Con eso, la primera obra se filma esa misma semana.</p>
@@ -2019,16 +2243,16 @@ html.js .gantt.visto .g-m{opacity:1}
   addEventListener('scroll', function(){ if(!pend){ pend = true; requestAnimationFrame(pintar); } }, {passive:true});
   pintar();
 
-  // 03 a 19: cada ficha, tabla, matriz y bloque arranca su entrada cuando entra en pantalla
+  // 03 a 20: cada ficha, tabla, matriz y bloque arranca su entrada cuando entra en pantalla
   document.documentElement.classList.add('js');
-  // 09 a 19: el orden de entrada de los hijos de .aparece y de las filas de cada .tabla
+  // 10 a 20: el orden de entrada de los hijos de .aparece y de las filas de cada .tabla
   [].forEach.call(document.querySelectorAll('.aparece'), function(a){
     [].forEach.call(a.children, function(c,i){ c.style.setProperty('--q', i); });
   });
   [].forEach.call(document.querySelectorAll('.tabla tbody'), function(tb){
     [].forEach.call(tb.children, function(tr,i){ tr.style.setProperty('--i', i); });
   });
-  // al imprimir, la lista plegada de la 16 sale abierta
+  // al imprimir, la lista plegada de la 17 sale abierta
   addEventListener('beforeprint', function(){ [].forEach.call(document.querySelectorAll('details'), function(d){ d.open = true; }); });
   var fichas = [].slice.call(document.querySelectorAll('.ficha, .versus, .foda, .personas, .cruce, .segs, .giro, .s08-tres, .aparece, .tabla, .temas, .embudo, .reparto, .captura, .gantt'));
   if ('IntersectionObserver' in window) {
@@ -2037,6 +2261,130 @@ html.js .gantt.visto .g-m{opacity:1}
     }, {threshold:.3});
     fichas.forEach(function(f){ io.observe(f); });
   } else { fichas.forEach(function(f){ f.classList.add('visto'); }); }
+})();
+</script>
+<script>
+// 07: la curva, las barras con su tooltip y la entrada de los bloques [data-ver]
+(function(){
+  // Google Trends, Argentina, «membrana líquida», semanas del 7-9-2025 al 6-9-2026 (100 = la semana más buscada)
+  var INICIO = Date.UTC(2025, 8, 7);
+  var V = [98,84,85,75,82,73,75,72,73,67,72,83,68,82,67,71,63,85,89,85,75,73,66,66,68,57,72,70,79,76,99,98,89,74,77,74,53,53,66,55,57,56,48,49,49,58,69,80,79,70,98,100,95];
+  var MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  var CORTOS = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  var NS = 'http://www.w3.org/2000/svg';
+  var quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function fecha(i){ return new Date(INICIO + i * 7 * 864e5); }
+  function larga(i){ var d = fecha(i); return 'Semana del ' + d.getUTCDate() + ' de ' + MESES[d.getUTCMonth()] + ' de ' + d.getUTCFullYear(); }
+  function el(n, a, padre){ var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); if (padre) padre.appendChild(e); return e; }
+  function texto(n, a, t, padre){ var e = el(n, a, padre); e.textContent = t; return e; }
+
+  function tip(fig){
+    var t = fig.querySelector('.tip');
+    if (!t) { t = document.createElement('div'); t.className = 'tip'; t.setAttribute('aria-hidden', 'true');
+      t.appendChild(document.createElement('b')); t.appendChild(document.createElement('span')); fig.appendChild(t); }
+    return t;
+  }
+  function mostrar(t, fig, x, y, fuerte, suave){
+    t.firstChild.textContent = fuerte; t.lastChild.textContent = suave; t.classList.add('on');
+    var w = t.offsetWidth, h = t.offsetHeight, W = fig.clientWidth;
+    var l = Math.min(Math.max(0, x - w / 2), W - w), tp = y - h - 14;
+    if (tp < 0) tp = y + 18;
+    t.style.transform = 'translate(' + l + 'px,' + tp + 'px)';
+  }
+
+  // ── la curva ──
+  function curva(fig){
+    var svg = fig.querySelector('svg'), H = +fig.getAttribute('data-alto') || 300;
+    var marcas = JSON.parse(fig.getAttribute('data-marcas') || '[]');
+    var t = tip(fig), idx = V.length - 1;
+    function dibujar(){
+      var W = Math.max(280, fig.clientWidth);
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      var pad = {t: 58, r: 8, b: 30, l: 8}, iw = W - pad.l - pad.r, ih = H - pad.t - pad.b;
+      function X(i){ return pad.l + iw * i / (V.length - 1); }
+      function Y(v){ return pad.t + ih * (1 - v / 100); }
+      var d = V.map(function(v, i){ return (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v).toFixed(1); }).join('');
+      el('path', {'class': 'c-area', d: d + 'L' + X(V.length - 1) + ' ' + Y(0) + 'L' + X(0) + ' ' + Y(0) + 'Z'}, svg);
+      el('line', {'class': 'c-base', x1: pad.l, x2: W - pad.r, y1: Y(0), y2: Y(0)}, svg);
+      var linea = el('path', {'class': 'c-linea', d: d}, svg);
+      // meses: uno por trimestre, para que no se amontonen
+      [0, 13, 25, 39, 52].forEach(function(i, k, a){
+        var m = fecha(i), et = CORTOS[m.getUTCMonth()] + ((k === 0 || k === a.length - 1 || m.getUTCMonth() === 0 || k === 2) ? ' ' + m.getUTCFullYear() : '');
+        texto('text', {'class': 'c-mes', x: X(i), y: H - 8, 'text-anchor': k === 0 ? 'start' : (k === a.length - 1 ? 'end' : 'middle')}, et, svg);
+      });
+      // las dos marcas que cuentan la historia: el valle y la cima
+      marcas.forEach(function(m){
+        var x = X(m.i), y = Y(V[m.i]), fin = x > W * 0.72, ini = x < W * 0.2;
+        var anc = fin ? 'end' : (ini ? 'start' : 'middle'), dx = fin ? 6 : (ini ? -6 : 0);
+        var arriba = m.pos !== 'abajo', y1 = arriba ? y - 30 : y + 26;
+        texto('text', {'class': 'c-et', x: x + dx, y: y1, 'text-anchor': anc}, m.t, svg);
+        texto('text', {'class': 'c-et2', x: x + dx, y: y1 + 16, 'text-anchor': anc}, m.s, svg);
+        el('circle', {'class': 'c-punto', cx: x, cy: y, r: 4.5}, svg);
+      });
+      var guia = el('line', {'class': 'c-guia', x1: 0, x2: 0, y1: pad.t - 10, y2: Y(0), opacity: 0}, svg);
+      var punto = el('circle', {'class': 'c-hover', r: 5, opacity: 0}, svg);
+      function marcar(i){
+        idx = i; var x = X(i), y = Y(V[i]);
+        guia.setAttribute('x1', x); guia.setAttribute('x2', x); guia.setAttribute('opacity', 1);
+        punto.setAttribute('cx', x); punto.setAttribute('cy', y); punto.setAttribute('opacity', 1);
+        var r = fig.clientWidth / W;
+        mostrar(t, fig, x * r, y * r, V[i] === 100 ? 'La semana más buscada del año' : V[i] + ' % de la semana más buscada', larga(i));
+      }
+      function soltar(){ guia.setAttribute('opacity', 0); punto.setAttribute('opacity', 0); t.classList.remove('on'); }
+      svg.onpointermove = function(e){
+        var b = svg.getBoundingClientRect(), x = (e.clientX - b.left) * W / b.width;
+        marcar(Math.max(0, Math.min(V.length - 1, Math.round((x - pad.l) / iw * (V.length - 1)))));
+      };
+      svg.onpointerenter = svg.onpointermove;
+      svg.onpointerleave = soltar;
+      svg.onblur = soltar;
+      svg.onfocus = function(){ marcar(idx); };
+      svg.onkeydown = function(e){
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); marcar(Math.max(0, Math.min(V.length - 1, idx + (e.key === 'ArrowRight' ? 1 : -1)))); }
+        if (e.key === 'Escape') soltar();
+      };
+      // la línea se traza al entrar en pantalla
+      if (!quieto && !fig.closest('.visto')) {
+        var L = linea.getTotalLength(); linea.style.strokeDasharray = L; linea.style.strokeDashoffset = L;
+        fig.__trazar = function(){ linea.style.transition = 'stroke-dashoffset 1.6s cubic-bezier(.23,1,.32,1)'; linea.style.strokeDashoffset = 0; };
+      }
+    }
+    dibujar();
+    var ancho = fig.clientWidth, esp;
+    addEventListener('resize', function(){ clearTimeout(esp); esp = setTimeout(function(){ if (fig.clientWidth !== ancho) { ancho = fig.clientWidth; dibujar(); } }, 150); });
+    // la tabla para lectores de pantalla: los mismos 53 valores
+    var caja = document.createElement('div'); caja.className = 'a11y'; var tb = document.createElement('table');
+    var cap = document.createElement('caption'); cap.textContent = 'Interés en Google por «membrana líquida», por semana (100 = la semana más buscada)'; tb.appendChild(cap);
+    V.forEach(function(v, i){ var tr = tb.insertRow(), a = tr.insertCell(), b = tr.insertCell(); a.textContent = larga(i); b.textContent = v; });
+    caja.appendChild(tb); fig.appendChild(caja);
+  }
+
+  // ── la comparación: cada barra tiene su tooltip al pasar o al enfocar ──
+  function barras(lista){
+    var fig = lista.closest('figure') || lista.parentNode, t = tip(fig);
+    [].forEach.call(lista.children, function(li, i){
+      li.style.setProperty('--q', i); li.tabIndex = 0;
+      function ver(){ var b = li.querySelector('.rank__b').getBoundingClientRect(), f = fig.getBoundingClientRect();
+        mostrar(t, fig, b.right - f.left, b.top - f.top, li.getAttribute('data-fuerte'), li.getAttribute('data-suave')); }
+      li.addEventListener('pointerenter', ver); li.addEventListener('focus', ver);
+      li.addEventListener('pointerleave', function(){ t.classList.remove('on'); });
+      li.addEventListener('blur', function(){ t.classList.remove('on'); });
+    });
+  }
+
+  [].forEach.call(document.querySelectorAll('.curva'), curva);
+  [].forEach.call(document.querySelectorAll('.rank'), barras);
+  [].forEach.call(document.querySelectorAll('[data-ver]'), function(a){
+    [].forEach.call(a.querySelectorAll('.entra'), function(c, i){ if (!c.style.getPropertyValue('--q')) c.style.setProperty('--q', i); });
+  });
+  var ver = [].slice.call(document.querySelectorAll('[data-ver]'));
+  function entrar(f){ f.classList.add('visto'); [].forEach.call(f.querySelectorAll('.curva'), function(c){ if (c.__trazar) c.__trazar(); }); }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting) { entrar(e.target); io.unobserve(e.target); } }); }, {threshold: .25});
+    ver.forEach(function(f){ io.observe(f); });
+  } else { ver.forEach(entrar); }
 })();
 </script>
 </body>
