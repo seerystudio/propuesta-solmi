@@ -660,26 +660,10 @@ html.js .embudo.visto .esc__barra{opacity:1;transform:none}
 @media(max-width:560px){.sitio{grid-template-columns:minmax(0,1fr)}.movil{max-width:300px}}
 
 /* ══════════ 13 · PRODUCCIÓN ══════════ */
-.pasos{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));position:relative}
-.pasos::before{content:"";position:absolute;top:5px;left:6px;width:75%;height:2px;background:var(--naranja);transform-origin:0 50%}
-.pasos li{position:relative;padding:34px 22px 0 0}
-.pasos li::before{content:"";position:absolute;top:0;left:0;width:12px;height:12px;background:var(--naranja)}
-.pasos .rot{display:block;margin:0 0 10px}
-.pasos b{display:block;font-family:var(--tit);font-weight:600;letter-spacing:-.035em;font-size:clamp(20px,2.1vw,28px);line-height:1.05}
-.pasos__txt{display:block;margin-top:9px;font-size:14.5px;color:var(--hueso);line-height:1.45;font-weight:300}
-.encuadre{position:relative;height:30px;margin:30px 0 0 5px;width:calc(75% + 2px);border:1.5px solid var(--linea-2);border-top:0}
-.encuadre span{position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);padding:0 14px;background:var(--negro);font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--hueso);white-space:nowrap}
-html.js .pasos::before{transform:scaleX(0);transition:transform 1s var(--sal) .2s}
-html.js .pasos li::before{opacity:0;transform:scale(.4);transition:opacity .3s ease,transform .45s var(--sal);transition-delay:calc(var(--q,0) * 240ms + .2s)}
-html.js .captura.visto .pasos::before,html.js .captura.visto .pasos li::before{opacity:1;transform:none}
-@media(max-width:800px){
-  .pasos{grid-template-columns:minmax(0,1fr)}
-  .pasos::before{top:6px;bottom:30px;left:5px;width:2px;height:auto;transform-origin:50% 0}
-  html.js .pasos::before{transform:scaleY(0)}
-  .pasos li{padding:0 0 26px 34px}
-  .pasos li::before{top:3px}
-  .encuadre{display:none}
-}
+/* la tabla del mes: el número del formato de la 10, arriba del nombre */
+.semanas td .num{display:block;margin-bottom:4px;font-size:11px;font-weight:700;letter-spacing:.15em;color:var(--naranja)}
+.semanas tbody td{font-family:var(--tit);font-weight:600;letter-spacing:-.02em;font-size:clamp(16px,1.5vw,19px);line-height:1.2}
+.semanas tbody td[colspan]{font-family:var(--sans);font-weight:400;letter-spacing:-.011em;font-size:15.5px}
 
 /* ══════════ 14 · MEDICIÓN ══════════ */
 .kpis__cab,.kpi{display:grid;grid-template-columns:40px minmax(0,1fr) 220px;gap:4px 28px;align-items:center}
@@ -743,11 +727,11 @@ html.js .gantt.visto .g-m{opacity:1}
 
 /* 10 a 15: sin movimiento y en papel, todo quieto y legible */
 @media(prefers-reduced-motion:reduce){
-  html.js .aparece > *,html.js .tabla tbody tr,html.js .barra100 i,html.js .esc__barra,html.js .pasos::before,html.js .pasos li::before,html.js .g-b{opacity:1;transform:none;transition:none}
+  html.js .aparece > *,html.js .tabla tbody tr,html.js .barra100 i,html.js .esc__barra,html.js .g-b{opacity:1;transform:none;transition:none}
   html.js .g-m{opacity:1;transition:none}
 }
 @media print{
-  html.js .aparece > *,html.js .tabla tbody tr,html.js .barra100 i,html.js .esc__barra,html.js .pasos::before,html.js .pasos li::before,html.js .g-b{opacity:1;transform:none}
+  html.js .aparece > *,html.js .tabla tbody tr,html.js .barra100 i,html.js .esc__barra,html.js .g-b{opacity:1;transform:none}
   html.js .g-m{opacity:1}
   .intro__txt,.tabla td,.esc__come,.canal p,.piezas span,.burbuja,.kpi p,.decision p,.bloque p,.fv__txt,.fv__req{color:#111}
   .ruta__scroll{overflow:visible}
@@ -1677,39 +1661,25 @@ html.js .gantt.visto .g-m{opacity:1}
     </div>
 
     <div class="intro">
-      <p class="intro__lead">Cada obra que pasa sin filmar se pierde. <em>El «antes» no se puede volver a filmar.</em></p>
-      <p class="intro__txt">Es lo único que empeora cada semana. Por eso el sistema empieza en la primera obra:
-      sin equipo, sin edición y sin parar el trabajo.</p>
+      <p class="intro__lead">Para empezar, un reel y un carrusel por semana. <em>El reel cambia de formato cada semana.</em></p>
+      <p class="intro__txt">Se arranca con poco y se sostiene. Los cuatro formatos de la sección 10 se
+      turnan, así la cuenta no repite siempre el mismo video.</p>
     </div>
 
-    <figure class="fig captura" aria-labelledby="cp-t">
+    <figure class="fig tabla semanas" aria-labelledby="sm-t">
       <div class="tablero__cab">
-        <h3 id="cp-t">El sistema de captura, en cada obra</h3>
-        <span>Lo hace la cuadrilla, con un teléfono.</span>
+        <h3 id="sm-t">Un mes de publicaciones</h3>
+        <span>El orden se repite cada mes.</span>
       </div>
-      <ol class="pasos">
-        <li style="--q:0"><span class="rot">Antes de empezar</span><b>30 segundos de recorrida</b><span class="pasos__txt">El estado del lugar, antes de tocar nada.</span></li>
-        <li style="--q:1"><span class="rot">Durante</span><b>60 segundos del trabajo</b><span class="pasos__txt">Con el teléfono apoyado, sin interrumpir a nadie.</span></li>
-        <li style="--q:2"><span class="rot">Cuando aparece algo</span><b>«Vení a ver esto»</b><span class="pasos__txt">Cada vez que alguien lo dice, se filma.</span></li>
-        <li style="--q:3"><span class="rot">Al terminar</span><b>El después</b><span class="pasos__txt">Desde el mismo lugar que el antes.</span></li>
-      </ol>
-      <div class="encuadre" aria-hidden="true"><span>Mismo lugar · misma luz · mismo encuadre</span></div>
+      <table>
+        <colgroup><col style="width:16%"><col><col><col><col></colgroup>
+        <thead><tr><th scope="col"><span class="a11y">Pieza</span></th><th scope="col">Semana 1</th><th scope="col">Semana 2</th><th scope="col">Semana 3</th><th scope="col">Semana 4</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Reel</th><td data-col="Semana 1"><span class="num">01</span>El paso a paso en el techo</td><td data-col="Semana 2"><span class="num">02</span>La recorrida de obra</td><td data-col="Semana 3"><span class="num">03</span>La obra con voz en off</td><td data-col="Semana 4"><span class="num">04</span>La pieza animada</td></tr>
+          <tr><th scope="row">Carrusel</th><td colspan="4" data-col="Semanas 1 a 4">Uno por semana, sobre uno de los cinco temas de la sección 10.</td></tr>
+        </tbody>
+      </table>
     </figure>
-
-    <div class="dos aparece">
-      <div class="bloque">
-        <span class="rot">Todas las semanas</span>
-        <h3>Un video y un carrusel</h3>
-        <p>Salen del material de la obra. La cuadrilla filma; la edición se hace aparte, en
-        lote.</p>
-      </div>
-      <div class="bloque">
-        <span class="rot">Una vez por mes</span>
-        <h3>Una jornada de grabación</h3>
-        <p>Medio día con producción presente, para lo que la obra no da: la fábrica, el producto en
-        detalle y la serie de las seis generaciones.</p>
-      </div>
-    </div>
 
     <p class="remate">Toda afirmación técnica sobre el producto la valida la empresa <em>antes de publicarse.</em></p>
   </div>
@@ -1807,7 +1777,7 @@ html.js .gantt.visto .g-m{opacity:1}
           <span class="g-m" style="grid-row:6;grid-column:12;--q:9" title="Semana 11"></span>
 
           <span class="g-lab" style="grid-row:7">Edición y publicación</span><span class="g-pista" style="grid-row:7"></span>
-          <span class="g-b g-b--nar" style="grid-row:7;grid-column:4 / 14;--q:4">Primera publicación · 1 video y 1 carrusel por semana</span>
+          <span class="g-b g-b--nar" style="grid-row:7;grid-column:4 / 14;--q:4">Primera publicación · 1 reel y 1 carrusel por semana</span>
 
           <span class="g-lab" style="grid-row:8">Sistema de marca</span><span class="g-pista" style="grid-row:8"></span>
           <span class="g-b" style="grid-row:8;grid-column:2 / 6;--q:2">Logo, paleta y tipografía</span>
@@ -1874,7 +1844,7 @@ html.js .gantt.visto .g-m{opacity:1}
   [].forEach.call(document.querySelectorAll('.tabla tbody'), function(tb){
     [].forEach.call(tb.children, function(tr,i){ tr.style.setProperty('--i', i); });
   });
-  var fichas = [].slice.call(document.querySelectorAll('.ficha, .versus, .foda, .personas, .cruce, .segs, .giro, .s08-tres, .aparece, .tabla, .temas, .embudo, .captura, .gantt'));
+  var fichas = [].slice.call(document.querySelectorAll('.ficha, .versus, .foda, .personas, .cruce, .segs, .giro, .s08-tres, .aparece, .tabla, .temas, .embudo, .gantt'));
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function(es){
       es.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('visto'); io.unobserve(e.target); } });
